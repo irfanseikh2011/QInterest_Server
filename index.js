@@ -33,9 +33,9 @@ app.get("*", (req, res) => {
 app.use(cors());
 
 
-if(process.env.NODE_ENV === 'production'){
-    app.use(express.static("client/build"))
-}
+// if(process.env.NODE_ENV === 'production'){
+//     app.use(express.static("client/build"))
+// }
 
 
 app.listen(PORT, () => {
