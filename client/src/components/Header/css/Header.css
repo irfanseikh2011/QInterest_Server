@@ -1,0 +1,104 @@
+header {
+    display: flex;
+    position: sticky;
+    top: 0px;
+    z-index: 100000;
+    min-height: 5vh;
+}
+
+.header-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: space-around;
+    background-color: rgb(98, 155, 155);
+    box-shadow: 1px 1px 5px rgb(17, 53, 53);
+}
+
+.header-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 0 10px;
+}
+
+.header-left > h3{
+    cursor: pointer;
+    padding: 0.3em;
+}
+
+.header-left > h3:hover {
+    background-color:  rgb(72, 129, 129);
+    border-radius: 9px;
+}
+
+.header-left img {
+    width: 50px;
+    margin-right: 0.5em;
+    cursor: pointer;
+}
+
+.header-middle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.header-search-container {
+    display: flex;
+    padding: 10px 10px;
+    margin-right: 10px;
+    background-color: #ffff;
+    border-radius: 3px;
+    border: 1px solid rgba(34, 34, 34, 0.233);
+}
+
+.header-search-container > input {
+    border: none;
+    width: 100%;
+    margin-left: 5px;
+    outline: none;
+}
+
+
+.header-right {
+    display: flex;
+}
+
+
+.header-right-container {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+}
+
+.header-right-container > .MuiSvgIcon-root {
+    color: skyblue;
+    padding: 10px 5px;
+    margin: 0px 5px;
+    cursor: pointer;
+}
+
+.header-right-container > .MuiSvgIcon-root:hover {
+    color: skyblue;
+    background-color:  rgb(72, 129, 129);
+    border-radius: 8px;
+}
+
+
+@media screen and (max-width:768px) {
+    .header-middle {
+        display: none;
+    }
+}
+
+@media screen and (min-width:768px){
+    .header-middle{
+        width: calc(20*2vw);
+    }
+
+    .header-search-container {
+        width: 100%;
+    }
+}

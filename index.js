@@ -32,6 +32,12 @@ app.get("*", (req, res) => {
 
 app.use(cors());
 
+
+if(process.env.NODE_ENV === 'production'){
+    app.use(express.static("frontend/build"))
+}
+
+
 app.listen(PORT, () => {
   console.log(`Queue Interest API is running on PORT No- ${PORT}`);
 });
