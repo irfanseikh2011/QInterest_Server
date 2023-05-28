@@ -12,6 +12,14 @@ const questionSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"Comments"
     },
+    liked_by: {
+        type:[{ type: String }]
+    },
+
+    likesCount: {
+        type: Number,
+        default: 0
+    },
 });
 
 module.exports = mongoose.model("Questions", questionSchema);

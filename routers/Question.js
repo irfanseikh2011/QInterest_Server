@@ -177,4 +177,58 @@ router.get("/:id", async (req, res) => {
   });
 
 
+  router.put('/:postId/like', async (req, res) => {
+    try {
+      const postId = req.params.postId;
+      const email = req.body.user.email; // Assuming user ID is passed in the request body
+    
+      // Find the post by ID
+      const post = await QuestionDB.findById(postId);
+  
+      if (!post) {
+        return res.status(404).json({ error: 'Post not found' });
+      }
+
+       // Check if the user has already liked the post
+    const likedIndex = post.liked_by.indexOf(email);
+    if (likedIndex > -1) {
+      // User has already liked the post, remove the like
+      post.liked_by.splice(likedIndex, 1);
+      post.likesCount -= 1;
+    } else {
+      // User hasn't liked the post, add the like
+      post.liked_by.push(email);
+      post.likesCount += 1;
+    }
+      // Save the updated post
+      await post.save();
+  
+      return res.json(post);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Server Error' });
+    }
+  });
+
+
+router.put('/delete/:questionId', async (req,res) => {
+  try {
+    const {questionId} = req.params;
+
+    const deletedQuestion = await QuestionDB.findByIdAndDelete(questionId);
+    const remainingQuestion =await QuestionDB.find();
+  
+    if (!deletedQuestion) {
+      return res.status(404).json({ error: 'Question not found' });
+    }
+
+    // Optionally, you can perform additional cleanup or actions here
+
+    return res.json({ message: 'Question deleted successfully', data: remainingQuestion });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
+})
+
 module.exports = router;
