@@ -231,4 +231,27 @@ router.put('/delete/:questionId', async (req,res) => {
   }
 })
 
+
+router.get('/questions/search', async (req,res) => {
+  try {
+    const {title} = req.query;
+
+    const foundQuestions = await QuestionDB.find({
+      $or: [
+        { title: {$regex: title, $options: 'i'}},
+        { body: {$regex: title, $options: 'i'}}
+      ]
+    });
+
+    if(foundQuestions.length < 1){
+      return res.status(400).json({message: "Questions Not found"})
+    }
+
+    return res.json(foundQuestions);
+  } catch(err){
+    console.log(err);
+    res.status(500).json({error: "server error"});
+  }
+})
+
 module.exports = router;
