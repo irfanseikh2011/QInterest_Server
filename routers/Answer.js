@@ -48,4 +48,39 @@ router.post("/", async (req, res) => {
   });
 
 
+
+  router.put('/:answerId/like', async (req, res) => {
+    try {
+      const answerId = req.params.answerId;
+      const email = req.body.user.email; // Assuming user ID is passed in the request body
+    
+      // Find the post by ID
+      const post = await answerDB.findById(answerId);
+  
+      if (!post) {
+        return res.status(404).json({ error: 'Answer not found' });
+      }
+
+       // Check if the user has already liked the post
+    const likedIndex = post.liked_by.indexOf(email);
+    if (likedIndex > -1) {
+      // User has already liked the post, remove the like
+      post.liked_by.splice(likedIndex, 1);
+      post.likesCount -= 1;
+    } else {
+      // User hasn't liked the post, add the like
+      post.liked_by.push(email);
+      post.likesCount += 1;
+    }
+      // Save the updated post
+      await post.save();
+  
+      return res.json(post);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Server Error' });
+    }
+  });
+
+
   module.exports = router;

@@ -114,6 +114,7 @@ router.get("/:id", async (req, res) => {
                 //   // created_at: 1,
                   question_id: 1,
                   created_at: 1,
+                  liked_by: 1
                 },
               },
             ],
@@ -253,5 +254,28 @@ router.get('/questions/search', async (req,res) => {
     res.status(500).json({error: "server error"});
   }
 })
+
+
+router.get('/questions/filter', async (req,res) => {
+  try {
+    const {tag} = req.query;
+
+    const foundQuestions = await QuestionDB.find({
+      $or: [
+        { tags: {$regex: tag, $options: 'i'}},
+      ]
+    });
+
+    if(foundQuestions.length < 1){
+      return res.status(400).json({message: "Questions Not found"})
+    }
+
+    return res.json(foundQuestions);
+  } catch(err){
+    console.log(err);
+    res.status(500).json({error: "server error"});
+  }
+})
+
 
 module.exports = router;
